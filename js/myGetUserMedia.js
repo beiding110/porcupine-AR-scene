@@ -3,11 +3,8 @@ function myGetUserMedia(obj) {
 };
 myGetUserMedia.prototype = {
     init: function(obj) {
-        this.$settings = obj;
+        this.update(obj);
 
-        this.getMedia(this.$settings);
-    },
-    getMedia: function(constraints) {
         // 老的浏览器可能根本没有实现 mediaDevices，所以我们可以先设置一个空的对象
     	if (navigator.mediaDevices === undefined) {
     		navigator.mediaDevices = {};
@@ -31,24 +28,45 @@ myGetUserMedia.prototype = {
     				getUserMedia.call(navigator, constraints, resolve, reject);
     			});
     		}
-    	}
+    	};
 
-    	navigator.mediaDevices.getUserMedia({ audio: true, video: true })
+        this.play();
+    },
+    play: function() {
+        var that = this;
+
+    	navigator.mediaDevices.getUserMedia(this.$settings)
     	.then(function(stream) {
-    		var video = document.querySelector(constraints.el);
-    		// 旧的浏览器可能没有srcObject
-    		if ("srcObject" in video) {
-    			video.srcObject = stream;
-    		} else {
-    			// 防止在新的浏览器里使用它，应为它已经不再支持了
-    			video.src = window.URL.createObjectURL(stream);
-    		}
-    		video.onloadedmetadata = function(e) {
-    			video.play();
-    		};
+    		that.setVideo(stream);
     	})
     	.catch(function(err) {
     		console.log(err.name + ": " + err.message);
     	});
+    },
+    setVideo: function(src) {
+        this.$stream = src;
+        var video = document.querySelector(this.$el);
+        // 旧的浏览器可能没有srcObject
+        if ("srcObject" in video) {
+            video.srcObject = src;
+        } else {
+            // 防止在新的浏览器里使用它，应为它已经不再支持了
+            video.src = window.URL.createObjectURL(src);
+        }
+        video.onloadedmetadata = function(e) {
+            video.play();
+        };
+    },
+    stop: function() {
+        if(this.$stream) {
+            var tracks = this.$stream.getTracks();
+            tracks.forEach(function(item) {
+                item.stop();
+            });
+        };
+    },
+    update: function(obj) {
+        this.$settings = obj;
+        this.$el = this.$settings.el;
     }
 }

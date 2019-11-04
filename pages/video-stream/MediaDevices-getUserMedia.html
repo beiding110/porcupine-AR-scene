@@ -5,20 +5,26 @@
 	<title>新api流媒体</title>
 	<meta name="keywords" content="">
 	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
 
 	<link rel="stylesheet" href="../../css/common.css">
 	<script src="../../js/myGetUserMedia.js" charset="utf-8"></script>
 
 	<style>
-	#shift{position:fixed; right:1em; bottom:1em;}
+	.btns-con{position:fixed; right:1em; bottom:1em;}
 	</style>
 </head>
 <body>
 	<video id="video" autoplay="" playsinline muted></video>
-	<input id="shift" type="button" value="切换"/>
+	<div class="btns-con">
+		<input id="shift" type="button" value="切换"/>
+		<input id="play" type="button" value="开始 >"/>
+		<input id="stop" type="button" value="停止 ||"/>
+	</div>
 
 	<script type="text/javascript">
 	var front = false,
+		media,
 		obj = {
 			get constraints() {
 				return {
@@ -37,14 +43,23 @@
 			},
 			set front(val) {
 				front =  val;
-				new myGetUserMedia(obj.constraints);
+
+				media.stop();
+				media.update(obj.constraints);
+				media.play();
 			}
 		};
 
-	new myGetUserMedia(obj.constraints);
+	media = new myGetUserMedia(obj.constraints);
 
 	document.querySelector('#shift').addEventListener('click', function() {
 		obj.front = !obj.front;
+	});
+	document.querySelector('#play').addEventListener('click', function() {
+		media.play();
+	});
+	document.querySelector('#stop').addEventListener('click', function() {
+		media.stop();
 	});
 	</script>
 </body>
