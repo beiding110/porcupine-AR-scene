@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>媒体流</title>
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+</head>
+<body>
+	<video id="video" width="640" height="480" autoplay="" playsinline muted></video>
+    <!-- <button id="snap" class="sexyButton">Snap Photo</button>
+    <canvas id="mycanvas" width="640" height="480"></canvas> -->
+
+	<script type="text/javascript">
+		window.addEventListener("DOMContentLoaded", function() {
+		    if (navigator.mediaDevices === undefined) {
+		        var div = document.createElement("div");
+		        div.innerHTML = 'mediaDevices not supported';
+		        document.body.appendChild(div);
+		    };
+
+		    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia ||  navigator.mozGetUserMedia;
+
+		    if (navigator.getUserMedia) {
+		        navigator.getUserMedia({
+					audio: true,
+					video: {
+						width: 1280,
+						height: 720
+					}
+				}, function(stream) {
+					var video = document.querySelector('video');
+					video.srcObject = stream;
+					video.onloadedmetadata = function(e) {
+						video.play();
+					};
+				}, function(err) {
+					alert("The following error occurred: " + err.name);
+				});
+		    } else {
+		        var div = document.createElement("div");
+		        div.innerHTML = 'getUserMedia not supported';
+		        document.body.appendChild(div);
+		        alert("getUserMedia not supported");
+		    };
+		}, false);
+	</script>
+	</body>
+</html>
