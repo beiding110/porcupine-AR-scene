@@ -16,12 +16,14 @@
 	var front = false,
 		obj = {
 			get constraints() {
-				el: '#video',
-				audio: true,
-				video: {
-					width: 1280,
-					height: 720 ,
-					facingMode: (front ? "user" : "environment")
+				return {
+					el: '#video',
+					audio: true,
+					video: {
+						width: 1280,
+						height: 720 ,
+						facingMode: (front ? "user" : "environment")
+					}
 				}
 			},
 
