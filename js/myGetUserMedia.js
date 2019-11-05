@@ -45,7 +45,8 @@ myGetUserMedia.prototype = {
     },
     setVideo: function(src) {
         this.$stream = src;
-        var video = document.querySelector(this.$el);
+        var video = this.$el,
+            that = this;
         // 旧的浏览器可能没有srcObject
         if ("srcObject" in video) {
             video.srcObject = src;
@@ -54,8 +55,27 @@ myGetUserMedia.prototype = {
             video.src = window.URL.createObjectURL(src);
         }
         video.onloadedmetadata = function(e) {
+            that.scaleVideo();
+
             video.play();
         };
+    },
+    scaleVideo: function() {
+        var video = this.$el;
+        var vw = video.videoWidth,
+            vh = video.videoHeight,
+            ew = video.offsetWidth,
+            eh = video.offsetHeight,
+            scale;
+
+        if(vw > vh) {
+            scale = eh / vh;
+        } else {
+            scale = ew / vw;
+        };
+
+        video.style.width = ew * scale + 'px';
+        video.style.height = eh * scale + 'px';
     },
     stop: function() {
         if(this.$stream) {
@@ -67,6 +87,6 @@ myGetUserMedia.prototype = {
     },
     update: function(obj) {
         this.$settings = obj;
-        this.$el = this.$settings.el;
+        this.$el = document.querySelector(this.$settings.el);
     }
 }
