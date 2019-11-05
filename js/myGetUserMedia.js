@@ -63,19 +63,15 @@ myGetUserMedia.prototype = {
     scaleVideo: function() {
         var video = this.$el;
         var vw = video.videoWidth,
-            vh = video.videoHeight,
-            ew = video.offsetWidth,
-            eh = video.offsetHeight,
-            scale;
+            vh = video.videoHeight;
 
         if(vw > vh) {
-            scale = eh / vh;
+            video.style.width = 'auto';
+            video.style.height = '100%';
         } else {
-            scale = ew / vw;
+            video.style.width = '100%';
+            video.style.height = 'auto';
         };
-
-        video.style.width = ew * scale + 'px';
-        video.style.height = eh * scale + 'px';
     },
     stop: function() {
         if(this.$stream) {
