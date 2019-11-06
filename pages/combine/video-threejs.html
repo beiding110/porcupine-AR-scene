@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>新api流媒体</title>
+	<title>threejs场景</title>
 	<meta name="keywords" content="">
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
@@ -10,8 +10,17 @@
 	<link rel="stylesheet" href="../../css/common.css">
 	<script src="../../js/myGetUserMedia.js" charset="utf-8"></script>
 
+    <script src="/js/lib/three.js" charset="utf-8"></script>
+	<script src="/js/my-three.js" charset="utf-8"></script>
+
+	<script src="/js/lib/stats.js" charset="utf-8"></script>
+	<script src="/js/MyStats.js" charset="utf-8"></script>
+
+	<script src="/js/lib/OrbitControls.js" charset="utf-8"></script>
+
 	<style>
 	.btns-con{position:fixed; right:1em; bottom:1em;}
+	video#video{z-index:-1;}
 	</style>
 </head>
 <body>
@@ -22,6 +31,7 @@
 		<input id="stop" type="button" value="停止 ■"/>
 	</div>
 
-	<script src="./js/MediaDevices-getUserMedia.js" charset="utf-8"></script>
+	<script src="../video-stream/js/MediaDevices-getUserMedia.js" charset="utf-8"></script>
+	<script src="../three-objects/js/index.js" charset="utf-8"></script>
 </body>
 </html>
