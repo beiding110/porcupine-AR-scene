@@ -1,0 +1,27 @@
+{
+  "name": "porcupine-ar-scene",
+  "version": "1.0.0",
+  "description": "porcupine ar scene with porcupine-engine",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/beiding110/porcupine-AR-scene.git"
+  },
+  "keywords": [
+    "ar-acene",
+    "porcupine-engine"
+  ],
+  "author": "yzh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/beiding110/porcupine-AR-scene/issues"
+  },
+  "homepage": "https://github.com/beiding110/porcupine-AR-scene#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-ws": "^4.0.0"
+  }
+}
