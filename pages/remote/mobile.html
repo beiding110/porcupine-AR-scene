@@ -27,6 +27,10 @@
 				msg: 'mobile request connecting'
 			}));
         });
+
+		window.onbeforeunload = function(event) {
+			socket.close();
+		}
     </script>
 
 	<script type="text/javascript">

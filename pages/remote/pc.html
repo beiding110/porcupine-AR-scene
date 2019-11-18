@@ -137,6 +137,10 @@
 				}))
 			}
         });
+
+		window.onbeforeunload = function(event) {
+			socket.close();
+		}
     </script>
 </body>
 </html>

@@ -40,6 +40,8 @@ var PC_WS = [],
 var onceSendOk = true;
 
 router.ws('/pc', function (ws, req){
+    console.log('one PC connect');
+
     ws.send(JSON.stringify({
         type: 'connect',
         msg: '链接成功'
@@ -62,12 +64,15 @@ router.ws('/pc', function (ws, req){
 
     ws.on('close', function (msg) {
         PC_WS.splice(PC_WS.indexOf(ws), 1);
+        console.log('one of PC close');
     });
 
     creatKeep(ws);
 });
 
 router.ws('/mobile', function (ws, req){
+    console.log('one mobile connect');
+
     ws.send(JSON.stringify({
         type: 'connect',
         msg: '链接成功'
@@ -83,8 +88,6 @@ router.ws('/mobile', function (ws, req){
             console.error(e);
         };
 
-        console.log(msg);
-
         if(data.type === 'mobile') {
             if(!onceSendOk) return;
 
@@ -97,6 +100,7 @@ router.ws('/mobile', function (ws, req){
 
     ws.on('close', function (msg) {
         MOBILE_WS = null;
+        console.log('one of MOBILE close');
     });
 
     creatKeep(ws);
