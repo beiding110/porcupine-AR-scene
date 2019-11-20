@@ -16,11 +16,11 @@ function creatKeep(ws) {
                 clearInterval(keeplifeHandler);
             }
             try{
-                lastkeeplife = -100;
                 ws.send(JSON.stringify({
                     type: 'heartBeating'
                 }));
             }catch(e){
+                lastkeeplife = -100;
                 console.log("keep live error! "+ e +"\n\n");
                 ws.close();
                 ws.emit("close");
@@ -29,7 +29,7 @@ function creatKeep(ws) {
         } catch(e) {
             console.error(e)
         }
-    },20000);
+    },5000);
 
     return keeplifeHandler;
 };
@@ -41,6 +41,7 @@ var onceSendOk = true;
 
 router.ws('/pc', function (ws, req){
     console.log('one PC connect');
+    var heart;
 
     ws.send(JSON.stringify({
         type: 'connect',
@@ -65,13 +66,15 @@ router.ws('/pc', function (ws, req){
     ws.on('close', function (msg) {
         PC_WS.splice(PC_WS.indexOf(ws), 1);
         console.log('one of PC close');
+        clearInterval(heart)
     });
 
-    creatKeep(ws);
+    heart = creatKeep(ws);
 });
 
 router.ws('/mobile', function (ws, req){
     console.log('one mobile connect');
+    var heart;
 
     ws.send(JSON.stringify({
         type: 'connect',
@@ -101,9 +104,10 @@ router.ws('/mobile', function (ws, req){
     ws.on('close', function (msg) {
         MOBILE_WS = null;
         console.log('one of MOBILE close');
+        clearInterval(heart)
     });
 
-    creatKeep(ws);
+    heart = creatKeep(ws);
 });
 
 module.exports = router;

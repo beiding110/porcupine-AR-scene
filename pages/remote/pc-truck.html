@@ -2,22 +2,31 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>websocket-pc</title>
+	<title>websocket-pc-track</title>
 	<meta name="keywords" content="">
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
 
 	<link rel="stylesheet" href="../../css/common.css">
 	<script src="../../js/lib/three.js" charset="utf-8"></script>
-	<script src="../../js/my-three.js" charset="utf-8"></script>
 
-	<script src="../../js/lib/stats.js" charset="utf-8"></script>
-	<script src="../../js/MyStats.js" charset="utf-8"></script>
+	<style>
+	#container{width:100%; height:100%;}
+	</style>
 </head>
 <body>
-	<script src="../combine/js/scene.js" charset="utf-8"></script>
+	<div id="container">
 
+	</div>
+
+	<script src="./js/3dtruck.min.js" charset="utf-8"></script>
 	<script>
+		var globalController = {
+		    x: 0,
+		    y: 0,
+		    z: 0
+		};
+
         var socket = new WebSocket('ws://' + window.location.hostname + ':12110/ws/pc');
         socket.addEventListener('open', function (msg) {
 			socket.send(JSON.stringify({
